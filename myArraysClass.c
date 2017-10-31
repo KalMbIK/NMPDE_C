@@ -1,7 +1,7 @@
 //
 // Created by pusheen on 30.10.17.
 //
-#include "myarrays.h"
+#include "myArraysClass.h"
 #include <stdio.h>
 #include "stdlib.h"
 

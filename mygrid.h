@@ -4,7 +4,8 @@
 
 #ifndef NMPDE_C_MYGRID_H
 #define NMPDE_C_MYGRID_H
-#include "myarrays.h"
-Array * gethGrid(double a, double b, int N);
+#include "myArrays.h"
+
+TYPE* linspace(TYPE a, TYPE b, int N);
 double* vectorizeDoubleFun(double (*f)(double, double), double* gr, int N, double t);
 #endif //NMPDE_C_MYGRID_H

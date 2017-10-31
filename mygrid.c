@@ -5,11 +5,12 @@
 #include "mygrid.h"
 #include <stdlib.h>
 
-Array * getGrid(double a, double b, int N){
-    double step = (b-a)/N;
-    Array * gr = newArray(N);
+TYPE* linspace(TYPE a, TYPE b, int N) {
+    TYPE step = (b-a)/(N-1);
+    TYPE* gr = newArray(N);
+    gr[0] = a;
     for (int i = 1; i < N; i++){
-        gr->ar[i]=gr->ar[i-1]+step;
+        gr[i]=gr[i-1]+step;
     }
     return gr;
 }
