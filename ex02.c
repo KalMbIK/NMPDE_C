@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "myNumPy.h"
 
-int N = 1001, M = 11;
+int N = 11, M = 11;
 double x0=0, x1 = 1;
 double T = 0.2;
 double a_diff = 1;

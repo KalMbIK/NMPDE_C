@@ -40,15 +40,15 @@ TYPE* linspace(TYPE a, TYPE b, int size) {
 
 TYPE* vectorize(TYPE (*f)(TYPE), TYPE *gr, int size){
     TYPE * result = newArray(size);
-    for (int i = 0; i <= size; i++){
+    for (int i = 0; i < size; i++){
         result[i]=f(gr[i]);
     }
     return result;
 }
 
 TYPE* vectorizeOfArrayInPoint(TYPE (*f)(TYPE, TYPE), TYPE *gr, int size, TYPE t){
-    TYPE * result = (TYPE*)calloc(size, sizeof(TYPE));
-    for (int i = 0; i <= size; i++){
+    TYPE * result = newArray(size);
+    for (int i = 0; i < size; i++){
         result[i]=f(gr[i],t);
     }
     return result;
