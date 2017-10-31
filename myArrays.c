@@ -9,9 +9,6 @@
 TYPE* newArray(int size){
     return (TYPE*)calloc(size,sizeof(TYPE));
 }
-void freeArray(TYPE* a){
-    free(a);
-}
 void printArray(TYPE *a, int size){
     for (int i = 0; i < size; i++){
         printf("%lg ", a[i]);
