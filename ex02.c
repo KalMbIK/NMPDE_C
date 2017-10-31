@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "myNumPy.h"
 
-int N = 10241;
+int N = 161;
 double x0=0, x1 = 1;
 double T = 0.2;
 double a_diff = 1;
@@ -45,13 +45,13 @@ int main() {
     double * u = vectorize(&u0,gr,N);
     double * exact = vectorize(&exactSolution,gr,N);
     double * v = newArray(N);
-    double * d = newArray(N);
     double * D = newArray(N);
     double * C = newArray(N);
     //Consts initialization
     double a = -r;
     double b = 1+la;
     double c = -r;
+    double d = 0;
     C[0] = c/b;
     for (int i = 1; i < N; i++){
         C[i] = c/(b-a*C[i-1]);
@@ -59,17 +59,14 @@ int main() {
     double tt = 0;
     while (tt <= T){
 //        step(r,la,a,b,cK,cK1,f,D,u,v);
-        //BorderConditions
-        d[0] = 0;
-        d[N-1] = 0;
-        //
-        D[0] = d[0]/b;
+        D[0] = d/b;
         //f - initialization
         for (int i = 1; i < N - 1; i++){
-            d[i] = r*u[i-1]+(1-la)*u[i]+r*u[i+1];
-            D[i] = (d[i]-a*D[i-1])/(b-a*C[i-1]);
+            d = r*u[i-1]+(1-la)*u[i]+r*u[i+1];
+            D[i] = (d-a*D[i-1])/(b-a*C[i-1]);
         }
-        D[N-1] = (d[N-1]-a*D[N-2])/(b-a*C[N-2]);
+        d = 0;
+        D[N-1] = (d-a*D[N-2])/(b-a*C[N-2]);
         v[N-1] = D[N-1];
         for (int i = N-2; i >= 0; i--)
             v[i] = D[i]-C[i]*v[i+1];
@@ -87,7 +84,6 @@ int main() {
     free(gr);
     free(u);
     free(v);
-    free(d);
     free(D);
     free(C);
     free(exact);
