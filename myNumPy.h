@@ -9,6 +9,7 @@
 
 double dot(TYPE* a, TYPE* b, int size);
 double getNorm(TYPE* a, int size);
+double getMaxElement(TYPE* a, int size);
 TYPE* add(TYPE *a, TYPE *b, int size);
 TYPE* subtr(TYPE *a, TYPE *b, int size);
 

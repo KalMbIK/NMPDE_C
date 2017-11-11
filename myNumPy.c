@@ -4,6 +4,7 @@
 
 #include "myNumPy.h"
 #include <math.h>
+#include <limits.h>
 #include <stdlib.h>
 
 double dot(TYPE* a, TYPE* b, int size){
@@ -15,6 +16,16 @@ double dot(TYPE* a, TYPE* b, int size){
 double getNorm(TYPE* a, int size){
     return sqrt(dot(a,a,size));
 }
+
+double getMaxElement(TYPE* a, int size){
+    double max = INT_MIN;
+    for (int i = 0; i < size; i++){
+        if (a[i] > max)
+            max = a[i];
+    }
+    return max;
+}
+
 TYPE* add(TYPE *a, TYPE *b, int size){
     TYPE* res = newArray(size);
     for (int i = 0; i < size; i++)
