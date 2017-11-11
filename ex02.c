@@ -120,6 +120,8 @@ int main(void){
     double * v = newArray(N);
     double * exact = vectorize(&exactSolution,gr,N);
 
+
+
     solver(la,t,&u[1],&v[1],N-2);
 
     printf("Error = %g", getError(v,exact,N));
