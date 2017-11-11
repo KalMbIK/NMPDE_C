@@ -2,10 +2,10 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <mem.h>
+#include <string.h>
 #include "myNumPy.h"
 
-int N = 2001;
+int N = 81;
 double x0=0, x1 = 1;
 double T = 0.2;
 double a_diff = 1;
@@ -22,7 +22,7 @@ double exactSolution(double x){
     return u0(x)*f2(T);
 }
 
-void TDA_solver(double *a, double *b, double *c, double *cPrime, double *d, double *dPrime, double *result, int size) {
+void TDA_solver(const double *a, const double *b, const double *c, double *cPrime, const double *d, double *dPrime, double *result, int size) {
     cPrime[0] = c[0]/b[0];
     dPrime[0] = d[0]/b[0];
     for (int i = 1; i < size; i++){
@@ -35,7 +35,7 @@ void TDA_solver(double *a, double *b, double *c, double *cPrime, double *d, doub
         result[i] = dPrime[i] - cPrime[i]*result[i+1];
 }
 
-void generateRightHandSide(double* a, double* b, double* c, double* u, double* d, int size){
+void generateRightHandSide(const double* a, const double* b, const double* c, const double* u, double* d, int size){
     d[0] = b[0]*u[0] + c[0] * u[1];
     d[size-1] = a[size-1]*u[size-2]+b[size-1]*u[size-1];
     for (int i = 1; i < size-2; i++)
@@ -71,7 +71,7 @@ void solver(double lambda, double t, double* u0, double * res, int size){
     double * v = newArray(size);
     double * dPrime = newArray(size);
     double * cPrime = newArray(size);
-    int nbytes = size*sizeof(double);
+    size_t nbytes = size*sizeof(double);
 
     genCoeffs(lambda, a, b, c, size);
     genCoeffs(-lambda, aRight, bRight, cRight, size);
@@ -86,7 +86,6 @@ void solver(double lambda, double t, double* u0, double * res, int size){
         u = v;
         v = temp;
     }
-
 
     res = u;
 
