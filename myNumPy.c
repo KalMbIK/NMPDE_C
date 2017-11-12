@@ -3,9 +3,21 @@
 //
 
 #include "myNumPy.h"
+#include <stdlib.h>
 #include <math.h>
 #include <limits.h>
-#include <stdlib.h>
+#include <stdio.h>
+
+TYPE* newArray(int size){
+    return (TYPE*)calloc(size,sizeof(TYPE));
+}
+void printArray(TYPE *a, int size){
+    for (int i = 0; i < size; i++){
+        printf("%lg ", a[i]);
+    }
+    printf("\n");
+}
+
 
 double dot(TYPE* a, TYPE* b, int size){
     double sum = 0;

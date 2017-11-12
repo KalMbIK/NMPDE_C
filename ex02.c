@@ -11,7 +11,7 @@
 
 //IMPORTANT: I used notation from the Wikipedia to declare the TDM
 
-int N = 20;
+int N = 200;
 double x0=0, x1 = 1;
 double T = 0.2;
 double a_diff = 1;
