@@ -19,7 +19,7 @@ void printArray(TYPE *a, int size){
 }
 
 
-double dot(TYPE* a, TYPE* b, int size){
+double dot(const TYPE *a, const TYPE *b, int size){
     double sum = 0;
     for (int i = 0; i < size; i++)
         sum += a[i]*b[i];
@@ -29,8 +29,8 @@ double getNorm(TYPE* a, int size){
     return sqrt(dot(a,a,size));
 }
 
-double getMaxElement(TYPE* a, int size){
-    double max = INT_MIN;
+TYPE getMaxElement(const TYPE *a, int size){
+    TYPE max = INT_MIN;
     for (int i = 0; i < size; i++){
         if (a[i] > max)
             max = a[i];
@@ -38,13 +38,22 @@ double getMaxElement(TYPE* a, int size){
     return max;
 }
 
-TYPE* add(TYPE *a, TYPE *b, int size){
+TYPE getError(TYPE* a, TYPE* b, int size){
+    TYPE * delta = subtr(a,b,size);
+    TYPE * absDelta = vectorize(&fabs,delta,size);
+    TYPE max = getMaxElement(absDelta,size);
+    free(absDelta);
+    free(delta);
+    return max;
+}
+
+TYPE* add(const TYPE *a, const TYPE *b, int size){
     TYPE* res = newArray(size);
     for (int i = 0; i < size; i++)
         res[i] = a[i]+b[i];
     return res;
 }
-TYPE* subtr(TYPE *a, TYPE *b, int size){
+TYPE* subtr(const TYPE *a, const TYPE *b, int size){
     TYPE* res = newArray(size);
     for (int i = 0; i < size; i++)
         res[i] = a[i]-b[i];
@@ -61,7 +70,7 @@ TYPE* linspace(TYPE a, TYPE b, int size) {
     return gr;
 }
 
-TYPE* vectorize(TYPE (*f)(TYPE), TYPE *gr, int size){
+TYPE* vectorize(TYPE (*f)(TYPE), const TYPE *gr, int size){
     TYPE * result = newArray(size);
     for (int i = 0; i < size; i++){
         result[i]=f(gr[i]);
