@@ -7,15 +7,15 @@
 
 //IMPORTANT: I used notation from the Wikipedia to declare the TDM
 
-int N = 100;
+size_t N = 100;
 double x0=0, x1 = 1;
-double T = 1;
+//double T = 1;
 
 double u0(double x){
     return 1+sin(2*M_PI*x)/2;
 }
 
-double getError(double* a, double* b, int size){
+double getError(double *a, double *b, size_t size){
     double * delta = newArray(size);
     double * absDelta = newArray(size);
     subtr(a,b,delta,size);
@@ -27,7 +27,7 @@ double getError(double* a, double* b, int size){
 }
 
 int main(void){
-    double h = (x1-x0)/(N);
+//    double h = (x1-x0)/(N);
     double * gr = newArray(N+1);
     double * U_abar = newArray(N+1);
     double * U_2abar = newArray(N+1);
@@ -37,6 +37,7 @@ int main(void){
 
     //filename, size of grid, number of vectors to print, ... - pointers to vectors
     vectorsToCsv("test.csv",N+1,1,gr);
+
     printf("Error=%lg\n",getError(gr,gr,N+1));
 //    solver(la,t,&U_abar[1],&v[1],N-1);
 
