@@ -3,6 +3,6 @@ project(NMPDE_C)
 
 set(CMAKE_C_STANDARD 99)
 
-set(SOURCE_FILES ex02.c myNumPy.h myNumPy.c)
+set(SOURCE_FILES myNumPyV2.h myNumPyV2.c ex05.c)
 link_libraries(-lm)
 add_executable(NMPDE_C ${SOURCE_FILES})
