@@ -46,6 +46,7 @@ void vectorToFile(FILE *filePointer, TYPE *vector, int size){
     for (int i = 1; i < size; i++){
         fprintf(filePointer,",%lg",vector[i]);
     }
+    fprintf(filePointer,"\n");
 }
 
 void vectorsToCsv(char *filename, int size, unsigned num, ...){
@@ -54,10 +55,9 @@ void vectorsToCsv(char *filename, int size, unsigned num, ...){
     va_start(args, num);
     while (num--){
         vectorToFile(fp, va_arg(args, TYPE *), size);
-        fprintf(fp,"\n");
     }
-    fclose(fp);
     va_end(args);
+    fclose(fp);
 }
 
 double dot(TYPE* a, TYPE* b, int size){
@@ -71,6 +71,10 @@ double getNorm(TYPE* a, int size){
     return sqrt(dot(a,a,size));
 }
 
+//TYPE reduce(TYPE (*f)(TYPE), TYPE *gr, int size){
+//
+//}
+
 TYPE getMaxElement(TYPE *a, int size){
     double max = INT_MIN;
     for (int i = 0; i < size; i++){
@@ -78,6 +82,15 @@ TYPE getMaxElement(TYPE *a, int size){
             max = a[i];
     }
     return max;
+}
+
+TYPE getMinElement(TYPE *a, int size){
+    double min = INT_MAX;
+    for (int i = 0; i < size; i++){
+        if (a[i] < min)
+            min = a[i];
+    }
+    return min;
 }
 
 void add(TYPE *a, TYPE *b, TYPE* res, int size){

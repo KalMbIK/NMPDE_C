@@ -26,7 +26,9 @@ void vectorsToCsv(char *filename, int size, unsigned num, ...);
 
 double dot(TYPE* a, TYPE* b, int size);
 double getNorm(TYPE* a, int size);
+//TYPE reduce(TYPE (*f)(TYPE), TYPE *gr, int size);
 TYPE getMaxElement(TYPE *a, int size);
+TYPE getMinElement(TYPE *a, int size);
 
 void add(TYPE *a, TYPE *b, TYPE* res, int size);
 void subtr(TYPE *a, TYPE *b, TYPE* res, int size);
