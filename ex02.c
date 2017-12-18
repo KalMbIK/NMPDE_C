@@ -1,12 +1,12 @@
 //
 // Created by pusheen on 30.10.17.
 //
-//#define TYPE int
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "myNumPy.h"
+#include "myTDMAlgorithms.h"
 
 
 //IMPORTANT: I used notation from the Wikipedia to declare the TDM
@@ -26,27 +26,6 @@ double f2(double t){
 
 double exactSolution(double x){
     return u0(x)*f2(T);
-}
-
-void TDMA_solver(const double *a, const double *b, const double *c, double *cPrime, const double *d, double *dPrime,
-                 double *result, int size) {
-    cPrime[0] = c[0]/b[0];
-    dPrime[0] = d[0]/b[0];
-    for (int i = 1; i < size; i++){
-        if (i != size-1)
-            cPrime[i] = c[i]/(b[i]-a[i]*cPrime[i-1]);
-        dPrime[i] = (d[i] - a[i]*dPrime[i-1])/(b[i]-a[i]*cPrime[i-1]);
-    }
-    result[size-1] = dPrime[size-1];
-    for (int i = size-2; i >= 0; i--)
-        result[i] = dPrime[i] - cPrime[i]*result[i+1];
-}
-
-void generateRightHandSide(const double* a, const double* b, const double* c, const double* u, double* d, int size){
-    d[0] = b[0]*u[0] + c[0] * u[1];
-    d[size-1] = a[size-1]*u[size-2]+b[size-1]*u[size-1];
-    for (int i = 1; i < size-2; i++)
-        d[i] = a[i]*u[i-1] + b[i]*u[i] + c[i]*u[i+1];
 }
 
 void genCoeffs(double lambda, double* a, double* b, double* c, int size){
@@ -86,7 +65,7 @@ void solver(double lambda, double t, double* u0, double * res, int size){
 
     double tt = 0;
     while (tt < T){
-        generateRightHandSide(aRight, bRight, cRight, u, d, size);
+        TDM_dot(aRight, bRight, cRight, u, d, size);
         TDMA_solver(a, b, c, cPrime, d, dPrime, v, size);
         tt += t;
         double* temp = u;
@@ -106,15 +85,6 @@ void solver(double lambda, double t, double* u0, double * res, int size){
     free(v);
     free(dPrime);
     free(cPrime);
-}
-
-double getError(double* a, double* b, int size){
-    double * delta = subtr(a,b,size);
-    double * absDelta = vectorize(&fabs,delta,size);
-    double max = getMaxElement(absDelta,size);
-    free(absDelta);
-    free(delta);
-    return max;
 }
 
 int main(void){
