@@ -1,5 +1,5 @@
 //
-// Created by pusheen on 30.10.17.
+// Updated by pusheen on 17.12.17.
 //
 
 #include "myNumPyV2.h"
@@ -8,7 +8,7 @@ TYPE* newArray(size_t size){
     return (TYPE*)calloc(size,sizeof(TYPE));
 }
 
-void printArray(TYPE *a, int size){
+void printArray(const TYPE *a, int size){
     for (int i = 0; i < size; i++){
         printf("%lg ", a[i]);
     }
@@ -60,14 +60,14 @@ void vectorsToCsv(char *filename, int size, unsigned num, ...){
     fclose(fp);
 }
 
-double dot(TYPE* a, TYPE* b, int size){
+double dot(const TYPE *a, const TYPE *b, int size){
     double sum = 0;
     for (int i = 0; i < size; i++)
         sum += a[i]*b[i];
     return sum;
 }
 
-double getNorm(TYPE* a, int size){
+double getNorm(const TYPE *a, int size){
     return sqrt(dot(a,a,size));
 }
 
@@ -75,7 +75,7 @@ double getNorm(TYPE* a, int size){
 //
 //}
 
-TYPE getMaxElement(TYPE *a, int size){
+TYPE getMaxElement(const TYPE *a, int size){
     double max = INT_MIN;
     for (int i = 0; i < size; i++){
         if (a[i] > max)
@@ -84,7 +84,7 @@ TYPE getMaxElement(TYPE *a, int size){
     return max;
 }
 
-TYPE getMinElement(TYPE *a, int size){
+TYPE getMinElement(const TYPE *a, int size){
     double min = INT_MAX;
     for (int i = 0; i < size; i++){
         if (a[i] < min)
@@ -93,16 +93,14 @@ TYPE getMinElement(TYPE *a, int size){
     return min;
 }
 
-void add(TYPE *a, TYPE *b, TYPE* res, int size){
+void add(const TYPE *a, const TYPE *b, TYPE *res, int size){
     for (int i = 0; i < size; i++)
         res[i] = a[i]+b[i];
-    return;
 }
 
-void subtr(TYPE *a, TYPE *b, TYPE* res, int size){
+void subtr(const TYPE *a, const TYPE *b, TYPE *res, int size){
     for (int i = 0; i < size; i++)
         res[i] = a[i]-b[i];
-    return;
 }
 
 void linspace(TYPE a, TYPE b, TYPE* gr, int size) {
@@ -111,19 +109,16 @@ void linspace(TYPE a, TYPE b, TYPE* gr, int size) {
     for (int i = 1; i < size; i++){
         gr[i]=gr[i-1]+step;
     }
-    return;
 }
 
-void vectorize(TYPE (*f)(TYPE), TYPE *gr, TYPE* res, int size){
+void vectorize(TYPE (*f)(TYPE), const TYPE *gr, TYPE *res, int size){
     for (int i = 0; i < size; i++){
         res[i]=f(gr[i]);
     }
-    return;
 }
 
-void vectorizeOfArrayInPoint(TYPE (*f)(TYPE, TYPE), TYPE *gr, TYPE* res, int size, TYPE t){
+void vectorizeOfArrayInPoint(TYPE (*f)(TYPE, TYPE), const TYPE *gr, TYPE *res, int size, TYPE t){
     for (int i = 0; i < size; i++){
         res[i]=f(gr[i],t);
     }
-    return;
 }
