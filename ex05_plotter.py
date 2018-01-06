@@ -8,4 +8,5 @@ with open('cmake-build-debug/test.csv', 'rb') as f:
         Y.append(map(float,row))
 plt.plot(Y[0],Y[1])
 plt.plot(Y[0],Y[2])
+plt.plot(Y[0],Y[3])
 plt.show()

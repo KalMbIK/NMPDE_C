@@ -102,7 +102,7 @@ void solver(double step, double* u, double * v, size_t size, double (*alphaFun)(
         v = u;
         u = tt;
 
-        printf("%lg ",t);
+//        printf("%lg ",t);
     }
 
     free(flux);

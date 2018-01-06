@@ -8,7 +8,7 @@ TYPE* newArray(size_t size){
     return (TYPE*)calloc(size,sizeof(TYPE));
 }
 
-void printArray(const TYPE *a, int size){
+void printArray(TYPE *a, size_t size){
     for (int i = 0; i < size; i++){
         printf("%lg ", a[i]);
     }
@@ -41,7 +41,7 @@ void printArray(const TYPE *a, int size){
 //    arrayOfVectorsToCsv(filename, vectors, size, ind);
 //}
 
-void vectorToFile(FILE *filePointer, TYPE *vector, int size){
+void vectorToFile(FILE *filePointer, TYPE *vector, size_t size){
     fprintf(filePointer,"%lg",vector[0]);
     for (int i = 1; i < size; i++){
         fprintf(filePointer,",%lg",vector[i]);
@@ -60,14 +60,14 @@ void vectorsToCsv(char *filename, int size, unsigned num, ...){
     fclose(fp);
 }
 
-double dot(const TYPE *a, const TYPE *b, int size){
+double dot(TYPE *a, TYPE *b, size_t size){
     double sum = 0;
     for (int i = 0; i < size; i++)
         sum += a[i]*b[i];
     return sum;
 }
 
-double getNorm(const TYPE *a, int size){
+double getNorm(TYPE *a, size_t size){
     return sqrt(dot(a,a,size));
 }
 
@@ -75,7 +75,7 @@ double getNorm(const TYPE *a, int size){
 //
 //}
 
-TYPE getMaxElement(const TYPE *a, int size){
+TYPE getMaxElement(TYPE *a, size_t size){
     double max = INT_MIN;
     for (int i = 0; i < size; i++){
         if (a[i] > max)
@@ -84,7 +84,7 @@ TYPE getMaxElement(const TYPE *a, int size){
     return max;
 }
 
-TYPE getMinElement(const TYPE *a, int size){
+TYPE getMinElement(TYPE *a, size_t size){
     double min = INT_MAX;
     for (int i = 0; i < size; i++){
         if (a[i] < min)
@@ -93,17 +93,22 @@ TYPE getMinElement(const TYPE *a, int size){
     return min;
 }
 
-void add(const TYPE *a, const TYPE *b, TYPE *res, int size){
+void add(TYPE *a, TYPE *b, TYPE *res, size_t size){
     for (int i = 0; i < size; i++)
         res[i] = a[i]+b[i];
 }
 
-void subtr(const TYPE *a, const TYPE *b, TYPE *res, int size){
+void subtr(TYPE *a, TYPE *b, TYPE *res, size_t size){
     for (int i = 0; i < size; i++)
         res[i] = a[i]-b[i];
 }
 
-void linspace(TYPE a, TYPE b, TYPE* gr, int size) {
+void constMult(TYPE *a, TYPE alpha, TYPE *res, size_t size){
+    for (int i = 0; i < size; i++)
+        res[i]=alpha*a[i];
+}
+
+void linspace(TYPE a, TYPE b, TYPE *gr, size_t size) {
     TYPE step = (b-a)/(size-1);
     gr[0] = a;
     for (int i = 1; i < size; i++){
@@ -111,14 +116,20 @@ void linspace(TYPE a, TYPE b, TYPE* gr, int size) {
     }
 }
 
-void vectorize(TYPE (*f)(TYPE), const TYPE *gr, TYPE *res, int size){
+void vectorize(TYPE (*f)(TYPE), TYPE *gr, TYPE *res, size_t size){
     for (int i = 0; i < size; i++){
         res[i]=f(gr[i]);
     }
 }
 
-void vectorizeOfArrayInPoint(TYPE (*f)(TYPE, TYPE), const TYPE *gr, TYPE *res, int size, TYPE t){
+void vectorizeOfArrayInPoint(TYPE (*f)(TYPE, TYPE), TYPE *gr, TYPE *res, size_t size, TYPE t){
     for (int i = 0; i < size; i++){
         res[i]=f(gr[i],t);
+    }
+}
+
+void vectorize2D(TYPE (*f)(TYPE, TYPE), TYPE *a1, TYPE *a2, TYPE *res, size_t size){
+    for (int i = 0; i < size; i++){
+        res[i]=f(a1[i],a2[i]);
     }
 }
