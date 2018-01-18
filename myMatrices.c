@@ -1,5 +1,5 @@
 //
-// Created by Hell on 04.01.2018.
+// Created by pusheen on 04.01.2018.
 //
 
 #include "myMatrices.h"
@@ -40,6 +40,10 @@ void transposeMatrix(TYPE **a, TYPE **ta, size_t hSize, size_t vSize){
     }
 }
 
+void diagMatrixVector(TYPE *a, TYPE *b, TYPE *res, size_t size){
+    for(int i = 0; i < size; i++)
+        res[i]=a[i]*b[i];
+}
 void matrixVector(TYPE **a, TYPE *b, TYPE *res, size_t hSize, size_t vSize) {
     for (int i = 0; i < vSize; i++){
         res[i] = dot(a[i],b,hSize);
