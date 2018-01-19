@@ -52,7 +52,7 @@ void solver(double *g, double * steps, double*u, size_t size){
         invertSteps[i]=1/steps[i];
 
     for (int i = 0; i < size-2; i++)
-        d[i] = .5*(g[i+1]*steps[i]+g[i+2]*steps[i+1]);
+        d[i] = g[i+1]*.5*(steps[i]+steps[i+1]);
 
     createTDM(invertSteps,size-1,a,b,c);
 
@@ -78,12 +78,12 @@ double calculateError(double* steps, double* u, double* exact, size_t size){
         res += .5*steps[i]*(temp[i+1]+temp[i]);
 
     free(temp);
-    return res;
+    return sqrt(res);
 }
 
 int main(void){
 
-    size_t N = 1000;
+    size_t N = 100;
     double al = 10;
     double *gr = newArray(N+1);
     double *steps = newArray(N);
